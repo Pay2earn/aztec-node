@@ -38,6 +38,10 @@ The script streamlines the installation process, making it accessible for both n
 
 ## ⚡ Quick Start
 
+* Install git
+apt update && apt install git -y
+```bas
+
 * Clone repo
 ```bash
 git clone https://github.com/Pay2earn/aztec-node.git
