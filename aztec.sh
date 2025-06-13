@@ -9,7 +9,7 @@ echo -e "${CYAN}${BOLD}"
 echo "-----------------------------------------------------"
 echo "   One Click Setup Aztec Sequencer - Pay2earn"
 echo "-----------------------------------------------------"
-echo ""
+echo -e "${RESET}"
 
 # ====================================================
 # Aztec alpha-testnet Sequencer node setup script (v0.87.8)
@@ -25,23 +25,36 @@ echo "🔧 Updating system & installing base packages..."
 apt update && apt upgrade -y
 apt install -y screen ca-certificates curl gnupg lsb-release
 
-echo "📦 Installing Docker & Docker Compose..."
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-chmod a+r /etc/apt/keyrings/docker.gpg
+# Check Docker
+if ! command -v docker &>/dev/null; then
+  echo "📦 Installing Docker & Docker Compose..."
+  install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  chmod a+r /etc/apt/keyrings/docker.gpg
 
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
-  | tee /etc/apt/sources.list.d/docker.list > /dev/null
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+    | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-apt update
-apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-apt install -y docker-compose
+  apt update
+  apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  apt install -y docker-compose
+else
+  echo "✅ Docker already installed."
+fi
 
-echo "🧠 Installing Aztec CLI..."
-bash -i <(curl -sL https://install.aztec.network)
+# Check Aztec CLI
+if ! command -v aztec &>/dev/null; then
+  echo "🧠 Installing Aztec CLI..."
+  curl -sL https://install.aztec.network | sed 's/exec bash/# exec bash/' | bash
 
-echo 'export PATH=$PATH:/root/.aztec/bin' >> ~/.bashrc
-source ~/.bashrc
+  # Add Aztec to PATH
+  if ! grep -q '/root/.aztec/bin' ~/.bashrc; then
+    echo 'export PATH=$PATH:/root/.aztec/bin' >> ~/.bashrc
+  fi
+  export PATH=$PATH:/root/.aztec/bin
+else
+  echo "✅ Aztec CLI already installed."
+fi
 
 echo "⚙️ Setting up alpha-testnet..."
 aztec-up alpha-testnet
