@@ -39,8 +39,9 @@ The script streamlines the installation process, making it accessible for both n
 ## ⚡ Quick Start
 
 * Install git
+```bash
 apt update && apt install git -y
-```bas
+```
 
 * Clone repo
 ```bash
