@@ -40,8 +40,8 @@ The script streamlines the installation process, making it accessible for both n
 
 * Clone repo
 ```bash
-git clone https://github.com/Pay2earn/Aztec-Node.git
-cd Aztec-Node
+git clone https://github.com/Pay2earn/aztec-node.git
+cd aztec-node
 ```
 
 * Give permission to run the script
