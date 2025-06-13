@@ -51,7 +51,7 @@ chmod +x aztec.sh
 
 * Open a screen to run it in background
 ```bash
-screen -S aztec
+screen -S node
 ```
 
 * Run with sudo
