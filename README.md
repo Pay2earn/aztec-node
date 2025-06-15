@@ -40,7 +40,7 @@ The script streamlines the installation process, making it accessible for both n
 
 * Install git
 ```bash
-apt update && apt install git -y
+apt update && apt install -y git screen && apt upgrade -y
 ```
 
 * Clone repo
