@@ -72,7 +72,7 @@ echo "📄 Creating docker-compose.yml..."
 cat > /root/aztec-node/docker-compose.yml <<EOF
 services:
   node:
-    image: aztecprotocol/aztec:0.87.8
+    image: aztecprotocol/aztec:0.87.9
     environment:
       ETHEREUM_HOSTS: ${ETH_RPC}
       L1_CONSENSUS_HOST_URLS: ${CONS_RPC}
